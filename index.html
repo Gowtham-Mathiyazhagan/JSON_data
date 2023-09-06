@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #box {
+            height: 300px;
+            border: groove 1px black;
+            position: relative;
+            padding: 10px;
+            background-color: palegreen;
+        }
+
+        p {
+            margin-left: 10vw;
+        }
+
+        button,
+        input {
+            border: groove 1px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="box">
+        <h1>Get user information</h1>
+        <hr>
+        <label for="user">Enter user name</label>
+        <input type="text" id="input" name="user">
+        <br>
+        <button>submit</button>
+        <p></p>
+    </div>
+    <script>
+        let submit = document.getElementsByTagName("button")[0];
+        let inside = document.getElementsByTagName("p")[0];
+
+        submit.addEventListener("click", foo);
+        function foo() {
+            fetch("simple.json")
+                .then((res) => res.json())
+                .then((user) => {
+
+                    let data = "<ul>"
+                    user.forEach((users) => {
+                        let input = document.getElementById("input").value;
+                        if (input === users.name) {
+                            data += `<li>${users.name}</li>`
+                            data += `<li>${users.age}</li>`
+                            data += `<li>${users.gender}</li>`
+                            data += `<li>${users.city}</li>`
+                            console.log(users)
+
+                        }
+
+                    });
+                    data += "</ul>"
+                    inside.innerHTML = data
+                })
+        }
+    </script>
+</body>
+
+</html>
